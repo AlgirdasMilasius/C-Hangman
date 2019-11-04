@@ -22,12 +22,14 @@ namespace hangman_csharp
         static public string ReadFilePath()
         {
             var pathToFile = "";
-            OpenFileDialog theDialog = new OpenFileDialog();
-            theDialog.Title = "Open Text File";
-            theDialog.Filter = "TXT files|*.txt";
-            if (theDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog theDialog = new OpenFileDialog())
             {
-                 pathToFile = theDialog.FileName;
+                theDialog.Title = "Open Text File";
+                theDialog.Filter = "TXT files|*.txt";
+                if (theDialog.ShowDialog() == DialogResult.OK)
+                {
+                    pathToFile = theDialog.FileName;
+                }
             }
             return pathToFile;
         }
@@ -46,11 +48,11 @@ namespace hangman_csharp
         {
             this.DoubleBuffered = true;
             alphabetButtons = this.Controls.OfType<Button>().Except(new Button[] { ButtonNew }).ToArray();
-            Array.ForEach(alphabetButtons, b => b.Click += btn_click);
+            Array.ForEach(alphabetButtons, b => b.Click += Btn_click);
             ButtonNew.PerformClick();
         }
 
-        private void btn_click(object sender, EventArgs e)
+        private void Btn_click(object sender, EventArgs e)
         {
             if (ignore)
                 return;
@@ -172,12 +174,14 @@ namespace hangman_csharp
         {
             foreach (char c in GenerateWordFromListOfWords())
             {
-                Label lbl = new Label();
-                lbl.Text = " ";
-                lbl.Font = new Font(this.Font.Name, 35, FontStyle.Underline);
-                lbl.Location = new Point(startX, startY);
-                lbl.Tag = c.ToString();
-                lbl.AutoSize = true;
+                Label lbl = new Label
+                {
+                    Text = " ",
+                    Font = new Font(this.Font.Name, 35, FontStyle.Underline),
+                    Location = new Point(startX, startY),
+                    Tag = c.ToString(),
+                    AutoSize = true
+                };
                 this.Controls.Add(lbl);
                 labels.Add(lbl);
                 startX = lbl.Right;
