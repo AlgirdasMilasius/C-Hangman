@@ -19,12 +19,12 @@ namespace hangman_csharp
         }
 
         string[] words = {
-		"active",
-		"forum",
-		"participation",
-		"reward",
-		"ratings"
-	    };
+        "active",
+        "forum",
+        "participation",
+        "reward",
+        "ratings"
+        };
 
         Random r = new Random();
         Button[] alphabetButtons;
@@ -50,9 +50,13 @@ namespace hangman_csharp
             b.Enabled = false;
 
             Array.ForEach(labels.ToArray(), lbl => lbl.Text = lbl.Tag.ToString() == b.Text ? b.Text : lbl.Text);
+
             for (int x = 1; x <= labels.Count - 1; x++)
             {
-                //labels[x].Left = labels[x - 1].Right;
+                if (labels[x].Location.Y == labels[x - 1].Location.Y)
+                {
+                    labels[x].Left = labels[x - 1].Right;
+                }
             }
 
             stage += !labels.Any(lbl => lbl.Text == b.Text) ? 1 : 0;
@@ -107,8 +111,6 @@ namespace hangman_csharp
 
         private void ButtonNew_Click(object sender, EventArgs e)
         {
-            //this.SetClientSizeCore(546, 381);
-            //string word = words[r.Next(0, words.Length)].ToUpper();
 
             Array.ForEach(this.Controls.OfType<Label>().ToArray(), lbl => lbl.Dispose());
             Array.ForEach(alphabetButtons, b => b.Enabled = true);
@@ -116,7 +118,9 @@ namespace hangman_csharp
             int startX = 14;
             int startY = 250;
             CreationOfLabelForWords(startX, startY);
-            CreationOfLabelForWords(startX, startY+100);
+            CreationOfLabelForWords(startX, startY + 75);
+            CreationOfLabelForWords(startX, startY + 150);
+
 
             ignore = false;
             stage = 0;
