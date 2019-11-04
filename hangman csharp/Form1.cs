@@ -70,8 +70,20 @@ namespace hangman_csharp
             stage += !labels.Any(lbl => lbl.Text == b.Text) ? 1 : 0;
             ignore = labels.All(lbl => lbl.Text != " ") || stage == 10;
 
+            Paint += Form1_DrawingVictory;
+
             this.Invalidate();
         }
+        private void Form1_DrawingVictory(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            if (labels.All(lbl => lbl.Text != " ") && stage != 10)
+            {
+                var drawFont = new Font("Arial", 20);
+                var drawBrush = new SolidBrush(Color.Green);
+                e.Graphics.DrawString("Winner winner, chicken dinner!", drawFont, drawBrush, 250, 170);
+            }
+        }
+
 
         private void Form1_DrawingHangman(object sender, System.Windows.Forms.PaintEventArgs e)
         {
@@ -114,7 +126,7 @@ namespace hangman_csharp
             if (stage >= 10)
             {
                 e.Graphics.DrawLine(new Pen(Color.Black, 2), 198, 130, 213, 170);
-                var drawFont = new Font("Arial", 16);
+                var drawFont = new Font("Arial", 20);
                 var drawBrush = new SolidBrush(Color.Red);
                 e.Graphics.DrawString("You lost!", drawFont, drawBrush, 250, 170);
             }
