@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace hangman_csharp
 {
@@ -18,13 +19,21 @@ namespace hangman_csharp
             //Load += Form1_Load;
         }
 
-        string[] words = {
-        "active",
-        "forum",
-        "participation",
-        "reward",
-        "ratings"
-        };
+        static public string ReadFilePath()
+        {
+            var pathToFile = "";
+            OpenFileDialog theDialog = new OpenFileDialog();
+            theDialog.Title = "Open Text File";
+            theDialog.Filter = "TXT files|*.txt";
+            //theDialog.InitialDirectory = @"C:\";
+            if (theDialog.ShowDialog() == DialogResult.OK)
+            {
+                 pathToFile = theDialog.FileName;
+            }
+            return pathToFile;
+        }
+
+        string[] words = File.ReadAllLines(ReadFilePath());
 
         Random r = new Random();
         Button[] alphabetButtons;
@@ -120,7 +129,6 @@ namespace hangman_csharp
             CreationOfLabelForWords(startX, startY);
             CreationOfLabelForWords(startX, startY + 75);
             CreationOfLabelForWords(startX, startY + 150);
-
 
             ignore = false;
             stage = 0;
