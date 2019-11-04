@@ -52,12 +52,7 @@ namespace hangman_csharp
             Array.ForEach(labels.ToArray(), lbl => lbl.Text = lbl.Tag.ToString() == b.Text ? b.Text : lbl.Text);
             for (int x = 1; x <= labels.Count - 1; x++)
             {
-                labels[x].Left = labels[x - 1].Right;
-            }
-
-            if (labels[labels.Count - 1].Right > this.ClientSize.Width - 14)
-            {
-                this.SetClientSizeCore(labels[labels.Count - 1].Right + 14, 381);
+                //labels[x].Left = labels[x - 1].Right;
             }
 
             stage += !labels.Any(lbl => lbl.Text == b.Text) ? 1 : 0;
@@ -113,26 +108,41 @@ namespace hangman_csharp
         private void ButtonNew_Click(object sender, EventArgs e)
         {
             //this.SetClientSizeCore(546, 381);
-            string word = words[r.Next(0, words.Length)].ToUpper();
+            //string word = words[r.Next(0, words.Length)].ToUpper();
+
             Array.ForEach(this.Controls.OfType<Label>().ToArray(), lbl => lbl.Dispose());
             Array.ForEach(alphabetButtons, b => b.Enabled = true);
             labels = new List<Label>();
             int startX = 14;
-            foreach (char c in word)
+            int startY = 250;
+            CreationOfLabelForWords(startX, startY);
+            CreationOfLabelForWords(startX, startY+100);
+
+            ignore = false;
+            stage = 0;
+            this.Invalidate();
+        }
+
+        private string GenerateWordFromListOfWords()
+        {
+            string word = words[r.Next(0, words.Length)].ToUpper();
+            return word;
+        }
+
+        private void CreationOfLabelForWords(int startX, int startY)
+        {
+            foreach (char c in GenerateWordFromListOfWords())
             {
                 Label lbl = new Label();
                 lbl.Text = " ";
                 lbl.Font = new Font(this.Font.Name, 35, FontStyle.Underline);
-                lbl.Location = new Point(startX, 250);
+                lbl.Location = new Point(startX, startY);
                 lbl.Tag = c.ToString();
                 lbl.AutoSize = true;
                 this.Controls.Add(lbl);
                 labels.Add(lbl);
                 startX = lbl.Right;
             }
-            ignore = false;
-            stage = 0;
-            this.Invalidate();
         }
     }
 }
