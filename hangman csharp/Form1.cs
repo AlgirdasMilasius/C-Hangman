@@ -114,6 +114,9 @@ namespace hangman_csharp
             if (stage >= 10)
             {
                 e.Graphics.DrawLine(new Pen(Color.Black, 2), 198, 130, 213, 170);
+                var drawFont = new Font("Arial", 16);
+                var drawBrush = new SolidBrush(Color.Red);
+                e.Graphics.DrawString("You lost!", drawFont, drawBrush, 250, 170);
             }
         }
 
@@ -126,16 +129,16 @@ namespace hangman_csharp
             int startX = 14;
             int startY = 250;
             int SpaceFromStartingWord = 75;
-            if (this.radioButton1.Checked == true)
+            if (radioButton1.Checked == true)
             {
                 CreationOfLabelForWords(startX, startY);
             }
-            if (this.radioButton2.Checked == true)
+            if (radioButton2.Checked == true)
             {
                 CreationOfLabelForWords(startX, startY);
                 CreationOfLabelForWords(startX, startY + SpaceFromStartingWord);
             }
-            if (this.radioButton3.Checked == true)
+            if (radioButton3.Checked == true)
             {
                 CreationOfLabelForWords(startX, startY);
                 CreationOfLabelForWords(startX, startY + SpaceFromStartingWord);
