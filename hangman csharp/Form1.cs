@@ -25,7 +25,6 @@ namespace hangman_csharp
             OpenFileDialog theDialog = new OpenFileDialog();
             theDialog.Title = "Open Text File";
             theDialog.Filter = "TXT files|*.txt";
-            //theDialog.InitialDirectory = @"C:\";
             if (theDialog.ShowDialog() == DialogResult.OK)
             {
                  pathToFile = theDialog.FileName;
@@ -126,9 +125,22 @@ namespace hangman_csharp
             labels = new List<Label>();
             int startX = 14;
             int startY = 250;
-            CreationOfLabelForWords(startX, startY);
-            CreationOfLabelForWords(startX, startY + 75);
-            CreationOfLabelForWords(startX, startY + 150);
+            int SpaceFromStartingWord = 75;
+            if (this.radioButton1.Checked == true)
+            {
+                CreationOfLabelForWords(startX, startY);
+            }
+            if (this.radioButton2.Checked == true)
+            {
+                CreationOfLabelForWords(startX, startY);
+                CreationOfLabelForWords(startX, startY + SpaceFromStartingWord);
+            }
+            if (this.radioButton3.Checked == true)
+            {
+                CreationOfLabelForWords(startX, startY);
+                CreationOfLabelForWords(startX, startY + SpaceFromStartingWord);
+                CreationOfLabelForWords(startX, startY + SpaceFromStartingWord * 2);
+            }
 
             ignore = false;
             stage = 0;
@@ -156,5 +168,7 @@ namespace hangman_csharp
                 startX = lbl.Right;
             }
         }
+
+
     }
 }
